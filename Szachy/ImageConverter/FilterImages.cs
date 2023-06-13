@@ -22,7 +22,7 @@ namespace Szachy.ImageConverter
                     Color pixelColor = bitmap.GetPixel(x, y);
 
                     // Sprawdź, czy piksel ma kolor biały
-                    if (pixelColor.R > 150 && pixelColor.G > 150 && pixelColor.B > 150)
+                    if (pixelColor.R > 70 && pixelColor.G > 70 && pixelColor.B > 70)
                     {
                         // Jeśli tak, ustaw przezroczystość na 0
                         bitmap.SetPixel(x, y, Color.FromArgb(0, pixelColor.R, pixelColor.G, pixelColor.B));

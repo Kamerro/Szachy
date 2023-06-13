@@ -18,6 +18,7 @@ using Szachy.Figury;
 using Szachy.Grid;
 using Szachy.Factories;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+using System.Diagnostics;
 
 namespace Szachy
 {
@@ -225,10 +226,11 @@ namespace Szachy
             //Metoda powinna być wywołana wewnątrz figury. 
             //Globalny stan: gracz_w_trakcie_ruchu;
             //Jeżeli gracz jest w ruchu, to:
-          
-                if (gracz_w_trakcie_ruchu)
+            Debug.WriteLine("Ok");
+
+            if (gracz_w_trakcie_ruchu)
                 GraczWTrakcieRuchu(sender);
-              
+                 
            
             //Jeżeli gracz kliknął na bierkę:
                 else
