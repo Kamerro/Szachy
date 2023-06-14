@@ -12,6 +12,20 @@ namespace Szachy.Factories
 {
     internal class PieceFactory
     {
+        //Warto zawsze najpierw deklarować pola, później metody, łatwiej się połapać
+        public Image PionekC;
+        public Image PionekB;
+        public Image BiskupC;
+        public Image BiskupB;
+        public Image WiezaC;
+        public Image WiezaB;
+        public Image KonC;
+        public Image KonB;
+        public Image KrolC;
+        public Image KrolB;
+        public Image KrolowaC;
+        public Image KrolowaB;
+
         public PieceFactory()
         {
             PionekC = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/PionekC.png");
@@ -27,27 +41,14 @@ namespace Szachy.Factories
             KrolowaC = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/KrolowaC.png");
             KrolowaB = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/KrolowaB.png");
         }
-        public Image PionekC;
-        public Image PionekB;
-        public Image BiskupC;
-        public Image BiskupB;
-        public Image WiezaC;
-        public Image WiezaB;
-        public Image KonC;
-        public Image KonB;
-        public Image KrolC;
-        public Image KrolB;
-        public Image KrolowaC;
-        public Image KrolowaB;
-
         internal void MakePiece(string type,BetterPB pictureBox)
         {
             AFigury figura;
             bool isBlack;
             Image img;
             switch (type){
-                
-                case "Pionek":
+                //Tu też by można do tych stałych przyrównywać z FabrykiPol, ale ten enum jakoś mi bardziej pasuje, bo wtedy pionek musi byc public
+                case FabrykaPol.pionek:
                     isBlack = pictureBox.y == 6 ? true : false;
                     img = pictureBox.y == 6 ? PionekC : PionekB;
                     // bool isOnBlack = (j + i) % 2 == 0 ? false : true;

@@ -20,6 +20,8 @@ namespace Szachy.Figury
 
         public Image image { get; set; }
 
+        //Dziwnie wyglądają te konstrukcje, dlaczego są nazwy zmiennych (x i y) w deklaracji, nie wystarczy sam typ?
+        //Ale to chyba bardziej osobiste preferencje
         public List<(int x, int y)> listOfPossibleMovements;
         public (int x, int y) getPosition()
         {
