@@ -48,7 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIs\Service_Bierka_Pole.cs" />
+    <Compile Include="Converted Photos\ConvertedPhotos.cs" />
     <Compile Include="Factories\FabrykaPol.cs" />
+    <Compile Include="Factories\MoveFactory.cs" />
     <Compile Include="Factories\PieceFactory.cs" />
     <Compile Include="Figury\AFigury.cs" />
     <Compile Include="Figury\BetterPB.cs">

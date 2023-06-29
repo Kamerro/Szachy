@@ -7,39 +7,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Szachy.Figury;
 using Szachy.Grid;
-using Szachy.ImageConverter;
+using Szachy.Converted_Photos;
+using static Szachy.Converted_Photos.ConvertedPhotos;
 namespace Szachy.Factories
 {
     internal class PieceFactory
     {
-        //Warto zawsze najpierw deklarować pola, później metody, łatwiej się połapać
-        public Image PionekC;
-        public Image PionekB;
-        public Image BiskupC;
-        public Image BiskupB;
-        public Image WiezaC;
-        public Image WiezaB;
-        public Image KonC;
-        public Image KonB;
-        public Image KrolC;
-        public Image KrolB;
-        public Image KrolowaC;
-        public Image KrolowaB;
-
         public PieceFactory()
         {
-            PionekC = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/PionekC.png");
-            PionekB = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/PionekB.png");
-            BiskupC = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/BiskupC.png");
-            BiskupB = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/BiskupB.png");
-            WiezaC = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/WiezaC.png");
-            WiezaB = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/WiezaB.png");
-            KonC = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/KonC.png");
-            KonB = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/KonB.png");
-            KrolC = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/KrolC.png");
-            KrolB = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/KrolB.png");
-            KrolowaC = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/KrolowaC.png");
-            KrolowaB = FilterImages.ConvertImageTransparency($"{AppDomain.CurrentDomain.BaseDirectory}/Zdjecia/KrolowaB.png");
+          
         }
         internal void MakePiece(string type,BetterPB pictureBox)
         {
@@ -66,7 +42,6 @@ namespace Szachy.Factories
                     pictureBox.Image = img;
                     pictureBox.aFigura = figura;
                     pictureBox.aFigura.siatka = Siatka.initializeGrid();
-
                     break;
 
                 case "Wieza":

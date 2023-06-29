@@ -57,9 +57,6 @@ namespace Szachy.Factories
 
         internal void PrzypiszFigure(BetterPB pictureBox)
         {
-            AFigury figura; // Nigdy nie używane? Można usunąć?
-
-            //pierwsza pozycja (kolumna,wiersz);
 
             //Raczej unikaj "magic numberów" jeśli nie jest to ==1 lub ==0 warto zrobić jakieś stałe i porównać do stałej, poprawiam jeden przykład
             if (pictureBox.y == blackPawnY || pictureBox.y == whitePawnY)
@@ -126,12 +123,6 @@ namespace Szachy.Factories
         {
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
         }
-
-
-         private void ZrobPole(int i, int j, BetterPB pb)
-         {
-            //Brak ciała, do implementacji czy do usunięcia?
-         }
 
         internal void TotalInitializeOfHolder(BetterPB pictureBox, int sizeOfPB,bool IsTimeForWhite,int i,int j)
         {
