@@ -24,10 +24,8 @@ namespace Szachy
 {
     public partial class Chess : Form
     {
-
+        //Wydaje się rozsądniej trzymać pogrupowane public osobno i private osobno
         //Globalne zmienne
-        FabrykaPol fb = new FabrykaPol();
-        Label label = new Label();
         public Image PionekC;
         public Image PionekB;
         public Image BiskupC;
@@ -42,19 +40,23 @@ namespace Szachy
         public Image KrolowaB;
         public IAFigury ObjectInMovement = null;
         public int[,] SiatkaFigur = new int[8, 8];
-        bool gracz_w_trakcie_ruchu = false;
-        Siatka siatka;
-        private int indexerX;
-        private int indexerY;
         public char[] tablicaZnakow = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
         public Image PodrecznyImage { get; private set; }
         public Color PodrecznyBackground { get; private set; }
-        bool isThereWhiteMove = true;
-        List<(int x, int y)> ListOfForbiddenMovementsForTheKing;
-        private bool flagMoveIsWrong = false;
-        private bool istniejeRuch;
         public List<(int x, int y)> ListOfPossibleMovements { get; set; }
 
+        FabrykaPol fb = new FabrykaPol();
+        Label label = new Label();
+        Siatka siatka;
+        private int indexerX;
+        private int indexerY;
+        bool gracz_w_trakcie_ruchu = false;
+        bool isThereWhiteMove = true;
+        List<(int x, int y)> ListOfForbiddenMovementsForTheKing;
+        //Warto albo trzymać się, że zawsze dajesz private, albo nigdy
+        private bool flagMoveIsWrong = false;
+        // istniejeRuch nigdy nie jest używane, warto trzymać?
+        private bool istniejeRuch;
 
         public Chess()
         {
@@ -66,7 +68,8 @@ namespace Szachy
             this.Width += 50;
             this.Show();
         }
-
+        //Dobrą praktyką jest unikanie zwracania typu void. Tego się praktycznie nie da przetestować czy działa tak jak powinno.
+        //W przyszłości stworzę ErrorCode i każda funkcje przerobię na zwracanie błędu albo sukcesu.
         private void ZainicjujSiatke()
         {
             StworzSiatke();
@@ -100,6 +103,7 @@ namespace Szachy
         private void StworzSiatke()
         {
             bool IsTimeForWhite = false;
+            //Hm nie widzę gdzie ten rand jest wykorzystany?
             Random rand = new Random();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             int wiersz = 1;
@@ -119,8 +123,8 @@ namespace Szachy
                         fb.TotalInitializeOfHolder(pictureBox, sizeOfPB, IsTimeForWhite, i, j);
                         fb.AddEvents(pictureBox, SprawdzZCzymSasiadujeICzyMoznaSieRuszyc);
                         IsTimeForWhite = !IsTimeForWhite;
-                        fb.AddEventsLeave(pictureBox, pictureBoxHelperOut, mouseLeave);
-                        fb.AddEventsMouseMove(pictureBox, mouseMove, ifThereIsNoPossibilityToDestroy);
+                        fb.AddEventsLeave(pictureBox, pictureBoxHelperOut, MouseLeave);
+                        fb.AddEventsMouseMove(pictureBox, MouseMove, IfThereIsNoPossibilityToDestroy);
 
                         //Wciśnięcie do szachownicy pola z bierką
                         siatka.pushGrid((i / sizeOfPB, j / sizeOfPB, pictureBox));
@@ -151,22 +155,28 @@ namespace Szachy
 
         private void PodpiszLitery(int i, int j, int kolumna, int sizeOfPB)
         {
-            Label label = new Label();
-            label.Font = new Font(FontFamily.Families[2], 9, FontStyle.Bold);
-            label.AutoSize = true;
-            label.Text = tablicaZnakow[kolumna].ToString();
-            label.Location = new Point(i + (sizeOfPB / 2), j + 100);
+            // Może lepiej to wygląda w taki sposób?
+            Label label = new Label
+            {
+                Font = new Font(FontFamily.Families[2], 9, FontStyle.Bold),
+                AutoSize = true,
+                Text = tablicaZnakow[kolumna].ToString(),
+                Location = new Point(i + (sizeOfPB / 2), j + 100)
+            };
             this.Controls.Add(label);
           
         }
 
         private void PodpiszCyfry(int i,int j,int wiersz,int sizeOfPB)
         {
-            Label label = new Label();
-            label.Font = new Font(FontFamily.Families[2], 9, FontStyle.Bold);
-            label.Text = wiersz.ToString();
-            label.Location = new Point(i + 100, j + (sizeOfPB / 2) - 10);
+            Label label = new Label
+            {
+                Font = new Font(FontFamily.Families[2], 9, FontStyle.Bold),
+                Text = wiersz.ToString(),
+                Location = new Point(i + 100, j + (sizeOfPB / 2) - 10)
+            };
             this.Controls.Add(label);
+            // Ten wiersz w jakimś konkretnym celu tu zwiększasz?
             wiersz++;
         }
 
@@ -194,7 +204,7 @@ namespace Szachy
             return null;
         }
 
-        private void mouseLeave(object sender, EventArgs e)
+        private void MouseLeave(object sender, EventArgs e)
         {
             if ((sender as BetterPB).BackColor != Color.Yellow)
             {
@@ -202,14 +212,14 @@ namespace Szachy
             }
         }
        
-        private void mouseMove(object sender, MouseEventArgs e)
+        private void MouseMove(object sender, MouseEventArgs e)
         {
             if ((sender as BetterPB).BackColor != Color.Yellow)
             {
                 (sender as BetterPB).BackColor = Color.Green;
             }
         }
-        private void ifThereIsNoPossibilityToDestroy(object sender, MouseEventArgs e)
+        private void IfThereIsNoPossibilityToDestroy(object sender, MouseEventArgs e)
         {
             if (gracz_w_trakcie_ruchu)
             {
@@ -353,6 +363,7 @@ namespace Szachy
             }
         }
 
+        // Tego potwora koniecznie trzeba podzielić na mniejsze części :D Ale to już temat na dłuższe posiedzenie
         private void WykonajRuch(object sender,IAFigury figura,int x_1, int y_1)
         {
             //Logika pionów:

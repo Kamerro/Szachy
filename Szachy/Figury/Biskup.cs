@@ -113,6 +113,7 @@ namespace Szachy.Figury
            return false;
         }
 
+        //Te funkcje są do implementacji czy usunięcia?
         public override void OnBeforeMovement()
         {
 
