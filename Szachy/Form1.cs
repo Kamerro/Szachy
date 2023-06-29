@@ -18,6 +18,11 @@ using Szachy.Figury;
 using Szachy.Grid;
 using Szachy.Factories;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+<<<<<<< Updated upstream
+=======
+using System.Diagnostics;
+using static Szachy.Converted_Photos.ConvertedPhotos;
+>>>>>>> Stashed changes
 
 namespace Szachy
 {
@@ -27,18 +32,6 @@ namespace Szachy
         //Globalne zmienne
         FabrykaPol fb = new FabrykaPol();
         Label label = new Label();
-        public Image PionekC;
-        public Image PionekB;
-        public Image BiskupC;
-        public Image BiskupB;
-        public Image WiezaC;
-        public Image WiezaB;
-        public Image KonC;
-        public Image KonB;
-        public Image KrolC;
-        public Image KrolB;
-        public Image KrolowaC;
-        public Image KrolowaB;
         public IAFigury ObjectInMovement = null;
         public int[,] SiatkaFigur = new int[8, 8];
         bool gracz_w_trakcie_ruchu = false;
@@ -59,10 +52,12 @@ namespace Szachy
         {
             InitializeComponent();
             siatka = Siatka.initializeGrid();
+            PushPhotos();
             ZainicjujSiatke();
             LabelKtoMaRuch();
             this.Height += 50;
             this.Width += 50;
+           
             this.Show();
         }
 
@@ -71,6 +66,7 @@ namespace Szachy
             StworzSiatke();
             PrzypiszDoKroliWieze();
         }
+        //Inicjalizacej siatki
         private void PrzypiszDoKroliWieze()
         {
             Krol krolCzarny = ZnajdzKrolaCzarnego();
@@ -225,8 +221,13 @@ namespace Szachy
             //Metoda powinna być wywołana wewnątrz figury. 
             //Globalny stan: gracz_w_trakcie_ruchu;
             //Jeżeli gracz jest w ruchu, to:
+<<<<<<< Updated upstream
           
                 if (gracz_w_trakcie_ruchu)
+=======
+
+            if (gracz_w_trakcie_ruchu)
+>>>>>>> Stashed changes
                 GraczWTrakcieRuchu(sender);
               
            
@@ -355,10 +356,16 @@ namespace Szachy
         {
             //Logika pionów:
             //Jeżeli współrzędne obiektu ruchu dla określonego koloru 
+            //Iteracja po siatce, czytaj każdy obiekt z siatki,
+            //dla każdego piona przeczytaj czy ruszył się ruch wcześniej o 2 pola
+            //nie ważne czy czarny czy biały
             foreach (var obj in siatka.getTheGrid())
             {
+                //przeczytanie piona, jeżeli ruch był pionem to:
+
                 var czarny = obj.pb.aFigura as Pionek;
-                //Jeżeli figura ma oznaczenie jako potencjalne elPasso, figura w ruchu jest przeciwna od elPasso to:
+                //Jeżeli figura ma oznaczenie jako potencjalne en passant, figura w ruchu jest przeciwna od elPasso to:
+                //Sprawdz czy ruch wczesniej pionek wykonał ruch o 2 pola
                 if ((czarny != null && obj.pb.aFigura is Pionek && czarny.CzyRuchWczesniejWykonalRuchODwaPola())
                 && (czarny.is_black && !ObjectInMovement.is_black))
                 {
@@ -413,6 +420,7 @@ namespace Szachy
             
             if (ObjectInMovement is Krol && !(ObjectInMovement as Krol).czyZrobilRuch)
             {
+
                 if (ObjectInMovement.x == 2 && ObjectInMovement.y == 7)
                 {
                     foreach (var obj in siatka.getTheGrid())
@@ -436,7 +444,8 @@ namespace Szachy
                             ob.pb.aFigura.x = 3;
                             ob.pb.aFigura.y = 7;
                             ob.pb.Image = WiezaC;
-                            krol.wiezaLewa = null;
+                            ob.pb.Refresh();
+                           // krol.wiezaLewa = null;
                         }
                         if (ob.x == 0 && ob.y == 7)
                         {
@@ -476,7 +485,8 @@ namespace Szachy
                             ob.pb.aFigura.x = 5;
                             ob.pb.aFigura.y = 7;
                             ob.pb.Image = WiezaC;
-                            krol.wiezaPrawa = null;
+                            ob.pb.Refresh();
+                            //   krol.wiezaPrawa = null;
                         }
                         if (ob.x == 7 && ob.y == 7)
                         {
@@ -515,12 +525,13 @@ namespace Szachy
                             ob.pb.aFigura.x = 3;
                             ob.pb.aFigura.y = 0;
                             ob.pb.Image = WiezaB;
-                            krol.wiezaLewa = null;
+                            ob.pb.Refresh();
+                            //krol.wiezaLewa = null;
                         }
                         if (ob.x == 0 && ob.y == 0)
                         {
-                            ob.pb.Image = null;
-                            ob.pb.aFigura = null;
+                           ob.pb.Image = null;
+                           ob.pb.aFigura = null;
                         }
                     }
                     foreach (var ob in siatka.getTheGrid())
@@ -553,7 +564,8 @@ namespace Szachy
                             ob.pb.aFigura.x = 5;
                             ob.pb.aFigura.y = 0;
                             ob.pb.Image = WiezaB;
-                            krol.wiezaPrawa = null;
+                            ob.pb.Refresh();
+                            //   krol.wiezaPrawa = null;
                         }
                         if (ob.x == 7 && ob.y == 0)
                         {
@@ -568,11 +580,6 @@ namespace Szachy
                             ob.pb.aFigura = (Krol)krol.Clone();
                         }
                     }
-                }
-
-                else
-                {
-
                 }
             }
 
@@ -718,8 +725,14 @@ namespace Szachy
 
         }
 
+        //Dodać interfejs który wywołuje metodę obliczanaia ruchów i wywołuje metode show possible movements
+        //
+        // do klasy OperacjeGraczy -> list = operacje.ObliczMozliweRuchy(ObjectInMovement)
+        // OperacjeNaPlanszy ->  ShowPossibleMovements(ListOfPossibleMovements);
         private void ObliczMozliweRuchy()
         {
+            //Można zrobić fabrykę ruchów ale nie jest to zbyt czytelne.
+            //Dla obiektu w ruchu oblicza się możliwe ruchy i wyświetla je.
             ListOfPossibleMovements = ObjectInMovement.calculatePossibleMovements();
             ShowPossibleMovements(ListOfPossibleMovements);
 
@@ -727,7 +740,7 @@ namespace Szachy
 
         private void KoniecGry()
         {
-           // Application.Exit();
+            Application.Exit();
         }
 
 

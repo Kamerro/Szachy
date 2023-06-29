@@ -52,6 +52,7 @@ namespace Szachy.Factories
 
         internal void PrzypiszFigure(BetterPB pictureBox)
         {
+            //Konwencja nie do końca dobra, że do piece jest przekazywany pb
             AFigury figura;
             //pierwsza pozycja (kolumna,wiersz);
             if (pictureBox.y == 1 || pictureBox.y == 6)
@@ -117,10 +118,7 @@ namespace Szachy.Factories
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
-         private void ZrobPole(int i, int j, BetterPB pb)
-         {
 
-         }
 
         internal void TotalInitializeOfHolder(BetterPB pictureBox, int sizeOfPB,bool IsTimeForWhite,int i,int j)
         {
