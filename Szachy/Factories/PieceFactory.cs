@@ -15,7 +15,7 @@ namespace Szachy.Factories
     {
         public PieceFactory()
         {
-
+          
         }
         internal void MakePiece(string type,BetterPB pictureBox)
         {
@@ -23,8 +23,8 @@ namespace Szachy.Factories
             bool isBlack;
             Image img;
             switch (type){
-                
-                case "Pionek":
+                //Tu też by można do tych stałych przyrównywać z FabrykiPol, ale ten enum jakoś mi bardziej pasuje, bo wtedy pionek musi byc public
+                case FabrykaPol.pionek:
                     isBlack = pictureBox.y == 6 ? true : false;
                     img = pictureBox.y == 6 ? PionekC : PionekB;
                     // bool isOnBlack = (j + i) % 2 == 0 ? false : true;

@@ -13,14 +13,19 @@ namespace Szachy.Factories
 {
     internal class FabrykaPol
     {
+        static PieceFactory pieceFactory;
+
+        // Nie wiem czy nie odwrotnie białe z czarnymi, ale coś na tej zasadzie
+        const int blackPawnY = 6;
+        const int whitePawnY = 1;
+        public const string pionek = "Pionek";
         public FabrykaPol()
         {
-            if (piece == null)
+            if (pieceFactory == null)
             {
-                piece = new PieceFactory();
+                pieceFactory = new PieceFactory();
             }
         }
-        static PieceFactory piece;
         internal void AddEvents(BetterPB pictureBox, Action<object, EventArgs> sprawdzZCzymSasiadujeICzyMoznaSieRuszyc)
         {
             
@@ -52,38 +57,39 @@ namespace Szachy.Factories
 
         internal void PrzypiszFigure(BetterPB pictureBox)
         {
-            //Konwencja nie do końca dobra, że do piece jest przekazywany pb
-            AFigury figura;
-            //pierwsza pozycja (kolumna,wiersz);
-            if (pictureBox.y == 1 || pictureBox.y == 6)
+
+            //Raczej unikaj "magic numberów" jeśli nie jest to ==1 lub ==0 warto zrobić jakieś stałe i porównać do stałej, poprawiam jeden przykład
+            if (pictureBox.y == blackPawnY || pictureBox.y == whitePawnY)
             {
-                piece.MakePiece("Pionek", pictureBox);
+                // Warto też strigi usunąć z takiego bezpośredniego przekazywania do funkcji.
+                // Może warto zrobić enum z możliwymi figurami i go tu przekazywać?
+                pieceFactory.MakePiece(pionek, pictureBox);
 
             }
             if ((pictureBox.y == 0 || pictureBox.y == 7) && (pictureBox.x == 2 || pictureBox.x == 5))
             {
-                piece.MakePiece("Biskup", pictureBox);
+                pieceFactory.MakePiece("Biskup", pictureBox);
             }
 
             if ((pictureBox.y == 0 || pictureBox.y == 7) && (pictureBox.x == 0 || pictureBox.x == 7))
             {
-                piece.MakePiece("Wieza", pictureBox);
+                pieceFactory.MakePiece("Wieza", pictureBox);
 
             }
 
             if ((pictureBox.y == 0 || pictureBox.y == 7) && (pictureBox.x == 1 || pictureBox.x == 6))
             {
-                piece.MakePiece("Kon", pictureBox);
+                pieceFactory.MakePiece("Kon", pictureBox);
             }
 
             if ((pictureBox.y == 0 && (pictureBox.x == 4)) || (pictureBox.y == 7 && (pictureBox.x == 4)))
             {
-                piece.MakePiece("Krol", pictureBox);
+                pieceFactory.MakePiece("Krol", pictureBox);
 
             }
             if ((pictureBox.y == 0 && (pictureBox.x == 3)) || (pictureBox.y == 7 && (pictureBox.x == 3)))
             {
-                piece.MakePiece("Krolowa", pictureBox);
+                pieceFactory.MakePiece("Krolowa", pictureBox);
 
             }
 
@@ -117,8 +123,6 @@ namespace Szachy.Factories
         {
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
         }
-
-
 
         internal void TotalInitializeOfHolder(BetterPB pictureBox, int sizeOfPB,bool IsTimeForWhite,int i,int j)
         {

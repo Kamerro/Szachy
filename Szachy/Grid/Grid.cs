@@ -22,6 +22,7 @@ namespace Szachy.Grid
         private Siatka() {
 
         }
+        //Ta metoda w zasadzie nic nie robi, a jest aż w 7 miejscach używana?
         public static Siatka initializeGrid()
         {
             return grid;
